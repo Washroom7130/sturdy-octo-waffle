@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${blog.title}">Title</title>
+</head>
+<body>
+    <h1 th:text="${blog.title}">Title</h1>
+    <p><strong>Author:</strong> <span th:text="${blog.username}"></span></p>
+    <p th:text="${blog.content}"></p>
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+    <div th:if="${session.username} == ${blog.username}">
+        <a th:href="@{'/edit_blog/' + ${blog.id}}"><button>Edit Blog</button></a>
+        <form th:action="@{'/delete_blog/' + ${blog.id}}" method="post" style="display:inline;">
+            <button type="submit" onclick="return confirm('Are you sure?')">Delete Blog</button>
+        </form>
+    </div>
+
+    <br><a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>
