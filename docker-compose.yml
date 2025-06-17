@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: springboot_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: test_springboot
+      MYSQL_USER: test_springboot
+      MYSQL_PASSWORD: abcDEF1234
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./test_setup.sql:/docker-entrypoint-initdb.d/test_setup.sql
+
+  springboot-app:
+    build: .
+    container_name: springboot_app
+    ports:
+      - "4444:4444"  # Assuming your app is running on port 8080 inside container
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/test_springboot
+      SPRING_DATASOURCE_USERNAME: test_springboot
+      SPRING_DATASOURCE_PASSWORD: abcDEF1234
+    depends_on:
+      - mysql
+
+volumes:
+  db_data:
