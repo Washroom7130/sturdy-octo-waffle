@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the jar file into the container
-COPY target/demo-0.0.1-SNAPSHOT.war app.war
+COPY ./demo-0.0.1-SNAPSHOT.war app.war
 
 # Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.war"]
